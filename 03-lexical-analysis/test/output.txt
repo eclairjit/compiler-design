@@ -1,0 +1,17 @@
+} : SpecialSymbol
+return : Keyword
+string : Keyword
+using : Keyword
+{ : SpecialSymbol
+std : Keyword
+main : Identifier
+0 : Constant
+= : Operator
+a : Identifier
+namespace : Keyword
+; : SpecialSymbol
+( : SpecialSymbol
+) : SpecialSymbol
+cout : Identifier
+str : Identifier
+int : Keyword
