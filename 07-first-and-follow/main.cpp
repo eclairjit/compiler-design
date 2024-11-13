@@ -38,7 +38,7 @@ set<string> calculateFirst(char symbol) {
             string subSymbol(1, production[i]);
             set<string> subFirst = calculateFirst(production[i]);
             first.insert(subFirst.begin(), subFirst.end());
-            if (subFirst.find("eps") == subFirst.end()) {
+            if (subFirst.find("e") == subFirst.end()) {
                 break;
             }
         }
@@ -54,7 +54,7 @@ set<string> calculateFirst(const string &rhs) {
         string subSymbol(1, rhs[i]);
         set<string> subFirst = calculateFirst(rhs[i]);
         first.insert(subFirst.begin(), subFirst.end());
-        if (subFirst.find("eps") == subFirst.end()) {
+        if (subFirst.find("e") == subFirst.end()) {
             break;
         }
     }
@@ -78,11 +78,11 @@ void calculateFollow(char symbol) {
                     if (i + 1 < rhs.size()) {
                         set<string> firstNext = calculateFirst(rhs.substr(i + 1));
                         for (const string &f : firstNext) {
-                            if (f != "eps") {
+                            if (f != "e") {
                                 follow.insert(f);
                             }
                         }
-                        if (firstNext.find("eps") != firstNext.end() && prod.first != symbol) {
+                        if (firstNext.find("e") != firstNext.end() && prod.first != symbol) {
                             calculateFollow(prod.first);
                             follow.insert(followSets[prod.first].begin(), followSets[prod.first].end());
                         }
@@ -104,11 +104,11 @@ void generateParsingTable() {
         for (const string &rhs : prod.second) {
             set<string> first = calculateFirst(rhs);
             for (const string &terminal : first) {
-                if (terminal != "eps") {
+                if (terminal != "e") {
                     parsingTable[{lhs, terminal}] = rhs;
                 }
             }
-            if (first.find("eps") != first.end()) {
+            if (first.find("e") != first.end()) {
                 set<string> follow = followSets[lhs];
                 for (const string &terminal : follow) {
                     parsingTable[{lhs, terminal}] = rhs;
@@ -161,7 +161,6 @@ int main() {
     string grammarInput;
     string line;
 
-    // cout << "Enter the grammar (use '|' to separate alternatives, and type 'end' to finish):" << endl;
     while (getline(inputFile, line)) {
         if (line == "end") break;
         grammarInput += line + "\n";

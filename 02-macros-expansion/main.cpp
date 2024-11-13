@@ -1,17 +1,9 @@
-// #include <iostream>
-// #include <fstream>
-// #include <string>
-// #include <sstream>
-// #include <unordered_map>
-// #include <regex>
-// #include <vector>
-
 #include <bits/stdc++.h>
 using namespace std;
 
 struct Macro {
-    vector<string> parameters;
-    string body;
+    vector<string> parameters; // params of a function
+    string body; // text with which the macro is to be replaced
 };
 
 void preprocessFile(const string& inputFile, const string& outputFile) {
@@ -21,11 +13,11 @@ void preprocessFile(const string& inputFile, const string& outputFile) {
         return;
     }
 
-    unordered_map<string, Macro> macros;
-    stringstream buffer;
-    string line;
-    bool skipLine = false;
-    vector<bool> skipStack;
+    unordered_map<string, Macro> macros; // {name: macro descriprion}
+    stringstream buffer; // to accumulate the processed lines
+    string line; // to store the current line being processed
+    bool skipLine = false; // boolean flag to indicate whether the current line should be skipped (due to conditional directives) 
+    vector<bool> skipStack; // stack that keeps track of previoous skipLine values when entering nested conditionals (#ifdef, #ifndef, etc)
 
     // Read and parse the input file
     while (getline(inFile, line)) {
